@@ -109,11 +109,16 @@ class fingerprint():
 
         query_matches = re.search(r'(?i)^update.(.*).(SET)\s(.*?)((\swhere|;)(.*))', self.query)
         if query_matches:
-            setlist = re.search(r'(?i)(.*SET\s*)(.*?)(;|where.*|$)', self.query)
+            setlist = re.search(r'(?i)(update.*\s+SET\b\s+)(.*?)(\s+where(?!.*where)|$)', self.query)
             set_split = list(finger.mysplit(setlist.group(2)))
             # Using enumerate()
             for v, i in enumerate(set_split):
                 item = i.split('=', 1)
+                print(self.query)
+                print(set_split)
+                print(item)
+                print(item[0])
+                print(item[1])
                 #if values is equal with the variable plus an intiger, that's incrementing so we do not change it
                 isincrement = re.match(rf'{item[0]} *\+ *\d', item[1])
                 if isincrement:
@@ -132,59 +137,6 @@ class fingerprint():
                  ', '.join(set_split),
                  setlist.group(3)
              ))
-
-                # pos = 0
-            # exp = re.compile(r"""(['"]?)(.*?)\1(,|$)""")
-            # while True:
-            #     m = exp.search(list.group(2), pos)
-            #     result = m.group(2)
-            #     separator = m.group(3)
-            #     print(f"res: {result}")
-            #     print(f"sep: {separator}")
-            #     item = (result.split("="))
-            #     #if values is equal with the variable plus an intiger, that's incrementing so we do not change it
-            #     isincrement = re.match(rf'{item[0]} *\+ *\d', item[1])
-            #     if isincrement:
-            #         print(isincrement)
-            #         #set_list[v] = item[0] + "=" + item[1]
-            #
-            #     else:
-            #         if f'v{variable_counter}' not in myvalues:
-            #             myvalues[f'v{variable_counter}'] = set()
-            #         myvalues[f'v{variable_counter}'].add(item[1])
-            #         item[1] = f'<v{variable_counter}>'
-            #         #set_list[v] = item[0] + "=" + item[1]
-            #         variable_counter += 1
-            #     if not separator:
-            #         break
-            #
-            #     pos = m.end(0)
-
-            #set_list = list.group(2).split(",")
-            #print(set_list)
-            # read values and split them
-            #for v, i in enumerate(set_list):
-            #    print(v,i)
-                #item = (i.split("="))
-                # if values is equal with the variable plus an intiger, that's incrementing so we do not change it
-                # isincrement = re.match(rf'{item[0]} *\+ *\d', item[1])
-                # if isincrement:
-                #     set_list[v] = item[0] + "=" + item[1]
-                #
-                # else:
-                #     if f'v{variable_counter}' not in myvalues:
-                #         myvalues[f'v{variable_counter}'] = set()
-                #     myvalues[f'v{variable_counter}'].add(item[1])
-                #     item[1] = f'<v{variable_counter}>'
-                #     set_list[v] = item[0] + "=" + item[1]
-                #     variable_counter += 1
-
-
-            # self.query = ('{}{} {}'.format(
-            #     list.group(1),
-            #     ', '.join(set_list),
-            #     list.group(3)
-            # ))
 
         # where values is a simple number
         query_matches = re.search(r'(=|<>|>|<)(\s+)?([\d]+)', self.query)
@@ -359,6 +311,8 @@ class readData():
         # read the file into filecontent
         self.slow_dictionary = {}
         self.debug = debug
+        # we need i to be able to keep the sequence of the queries in a transaction
+        # which query has higher seq number should be executed later
         self.i = 1
         filecontent = readC.openFile(slowlogFile, self.debug)
         # find first # Time: 2020-01-21T16:55:13.249612Z
