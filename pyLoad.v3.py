@@ -124,58 +124,6 @@ class fingerprint():
                 else:
                     break
 
-        # query_matches = re.search(r'(?i)^update.(.*).(SET)\s(.*?)((\swhere|;)(.*)|$)', self.query)
-        # if query_matches:
-        #     setlist = re.search(r'(?i)(update.*\s+SET\b\s+)(.*?)(\s+where(?!.*where)(.*)|$)', self.query)
-        #     set_split = list(finger.mysplit(setlist.group(2)))
-        #     print(set_split)
-        #     if re.match(r'(?i)(.*)(\s+)?=(\s+)?INTERVAL(\s+)?\(', setlist.group(2)):
-        #         set_split = setlist.group(2)
-        #         item = set_split.split('=', 1)
-        #
-        #         # if values is equal with the variable plus an intiger, that's incrementing so we do not change it
-        #         isincrement = re.match(rf'{item[0]} *\+ *\d', item[1])
-        #         if isincrement:
-        #             set_split = item[0] + "=" + item[1]
-        #
-        #         else:
-        #             if f'v{variable_counter}' not in myvalues:
-        #                 myvalues[f'v{variable_counter}'] = set()
-        #
-        #             myvalues[f'v{variable_counter}'].add(item[1])
-        #             item[1] = f'$<v{variable_counter}>'
-        #             set_split = item[0] + "=" + item[1]
-        #             variable_counter += 1
-        #
-        #         self.query = ('{}{} {}'.format(
-        #             setlist.group(1),
-        #             set_split,
-        #             setlist.group(3)
-        #         ))
-        #
-        #     else:
-        #         for v, i in enumerate(set_split):
-        #
-        #             item = i.split('=', 1)
-        #             # if values is equal with the variable plus an intiger, that's incrementing so we do not change it
-        #             isincrement = re.match(rf'{item[0]} *\+ *\d', item[1])
-        #             if isincrement:
-        #                 set_split[v] = item[0] + "=" + item[1]
-        #
-        #             else:
-        #                 if f'v{variable_counter}' not in myvalues:
-        #                     myvalues[f'v{variable_counter}'] = set()
-        #                 myvalues[f'v{variable_counter}'].add(item[1])
-        #                 item[1] = f'$<v{variable_counter}>'
-        #                 set_split[v] = item[0] + "=" + item[1]
-        #                 variable_counter += 1
-        #         self.query = ('{}{} {}'.format(
-        #             setlist.group(1),
-        #             ', '.join(set_split),
-        #             setlist.group(3)
-        #         ))
-
-
         # everything between '' and ""
         query_matches = re.search(r'([\"\'])((?:\\\1|.)*?)\1', self.query)
         if query_matches:
@@ -298,49 +246,6 @@ class fingerprint():
                 data_csv.append(self.dict[trx_hash][finger_hash]['fingerprint'])
                 data_csv.append(self.dict[trx_hash][finger_hash]['values'])
                 finger.write_file(file, data_csv)
-
-    def mysplit(self, text):
-        in_quotes = False
-        fragment = ''
-        escape = False
-        starting_quote = ''
-        starting = False
-        bracket = False
-        for ch in text:
-            #print(f"{ch} - {starting} - {in_quotes} - {escape} ")
-            if "\\" in ch:
-                escape = True
-            elif ch in ("("):
-                fragment += ch
-                bracket = True
-            elif ch in (")"):
-                fragment += ch
-                bracket = False
-            elif ch in ("'", '"') and not starting and not in_quotes:
-                starting_quote = ch
-                starting = True
-                in_quotes = ch
-                fragment += ch
-            elif ch in ("'", '"') and not escape and not starting:
-                fragment += ch
-                escape = False
-            elif ch == ',' and not escape and not starting and not bracket:
-                yield fragment
-                fragment = ''
-                escape = False
-            else:
-                fragment += ch
-                if ch == in_quotes and not escape:
-                    in_quotes = False
-                    escape = False
-                    starting = False
-                elif ch in (starting_quote) and not escape:
-                    in_quotes = ch
-                    escape = False
-                    starting = False
-                escape = False
-
-        yield fragment
 
     def merge_dict(self, dict1, dict2):
         for k in dict2:
