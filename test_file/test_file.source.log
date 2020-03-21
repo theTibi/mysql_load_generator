@@ -1,0 +1,505 @@
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    43
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+SELECT c FROM sbtest1 WHERE id=51;
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    43
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+SELECT c FROM sbtest1 WHERE id=10;
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    43
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+SELECT c FROM sbtest1 WHERE id= 51 ;
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    43
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+SELECT c FROM sbtest1 WHERE id > 51 ;
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    43
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+SELECT c FROM sbtest1 WHERE id = "50" ;
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    44
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+SELECT *
+                FROM sbtest1
+                WHERE id = 2
+                AND b = 4;
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    44
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+SELECT c FROM sbtest1 WHERE id = 51 and id =31 or id =645;
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    44
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+SELECT c FROM sbtest1 WHERE id =  "51" and b="bela";
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    45
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+SELECT c FROM sbtest1 WHERE name="joe" and id in (3,5,3,6,123);
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    45
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+SELECT c FROM sbtest1 WHERE id in    ("ewr","2rw",2);
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    45
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+SELECT c FROM sbtest1 WHERE id between 11111 and 3246 and c=10;
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    45
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+SELECT c FROM sbtest1 WHERE id between 324234 and 3246 group by c;
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    45
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+SELECT c FROM sbtest1 WHERE id in (3,5,3,6,123) group by id order by id limit 10;
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    45
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+UPDATE sbtest1 SET k=k+1,b="4r323" WHERE id=50;
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    45
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+UPDATE sbtest1 SET k=32,b="4r323" WHERE id=50;
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    45
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+update sbtest1 set field1=if(field1!=1,0,1),userid=4745,date=now(),active=0,blocked=0 where id=62962;
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    45
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+update sbtest1 set field1 = 'abcd,abcd,abcd\'abcd,abcd' where id=62962;
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    45
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+update sbtest1 set field1 = 'abcd,"abcd",abcd\'abcd,abcd' where id=62962;
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    45
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+update sbtest1 set field1 = 'abcd,"abcd",abcd\'abcd,,,,,abcd' where id=62962;
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    45
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+INSERT INTO sbtest1 (id, k, c, pad) VALUES (51, 50, '3','4');
+# Time: 2020-01-21T16:55:13.250404Z
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id:    45
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000085  Lock_time: 0.000030  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 197  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 2
+SELECT c FROM sbtest1 WHERE c=45 and id between "2020-01-01" and "2020-02-01";
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387782
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000176  Lock_time: 0.000057  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 943  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 56F003C2E
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 5
+SET timestamp=1521634383;
+UPDATE sbtest SET partition_id = INTERVAL(ad_id, 4196304, 7405045, 7415771, 7426630);
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387782
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000176  Lock_time: 0.000057  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 943  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 56F003C2E
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 5
+SET timestamp=1521634383;
+INSERT INTO TempBranch (BranchID) SELECT BranchID FROM TempBranch where trace = NAME_CONST('trace_count',3);
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387782
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000176  Lock_time: 0.000057  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 943  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 56F003C2E
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 5
+SET timestamp=1521634383;
+SELECT DISTINCT OWNER FROM table1 WHERE table1.org= 'o=RMG,cn=joe,cn=BOP,o=example.net' AND table1.VERSION = 1.2;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387782
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000176  Lock_time: 0.000057  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 943  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 56F003C2E
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 5
+SET timestamp=1521634383;
+SELECT  `table1`.* FROM `table1`  WHERE (login = 'joe') LIMIT 1;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387782
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000176  Lock_time: 0.000057  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 943  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 56F003C2E
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 5
+SET timestamp=1521634383;
+update sbtest1 set sbtest1.modified = 'cn=pc,cn=organizational users,o=system,cn=joe,cn=BOP,o=uk.prv.attenda.net', sbtest1.name = 'Joe Name', sbtest1.DESCRIPTION = 'Joe name', sbtest1.CONTENT = 'bad bad \',content with a lot of "" https://exmaple.com/test, (adaada) {231231} \"', sbtest1.PARENT_ID = '32432-dsa-4323r-sf-fsd', sbtest1.TYPE_REVISION = 'frfgdgd', sbtest1.TYPE_ID = 'ID_TYPE_XMLDOCUMENT', sbtest1.LASTMODIFIED_DATE = '2020-01-31T19:56:43.004', sbtest1.ACCESSCONTROLPOLICY_ID = 'OPEN_TO_ALL_ACL', sbtest1.INHERIT_PARENT_ACP = 1, sbtest1.CREATED_BY = 'cn=pc,cn=organizational users,o=system,cn=joe,cn=BOP,o=example.net', sbtest1.CREATED_DATE = '2020-01-31T19:56:43.004', sbtest1.INTERNAL_NAME = 'joe full product' where sbtest1.REVISION = 'ISVP_REGISTRY' and sbtest1.DOCUMENT_ID = 'fdsf-3482jodfd';
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387782
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000307  Lock_time: 0.000067  Rows_sent: 2  Rows_examined: 4  Rows_affected: 0
+# Bytes_sent: 1877  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 56F003C2F
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: Yes  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 9
+SET timestamp=1521634383;
+SELECT `sbtest1`.* FROM `sbtest1`  WHERE (user_id = 228576 AND (agent_status != -1)) ORDER BY name ASC;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387779
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000026  Lock_time: 0.000000  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 11  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+# No InnoDB statistics available for this query
+SET timestamp=1521634383;
+BEGIN;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387779
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000267  Lock_time: 0.000042  Rows_sent: 0  Rows_examined: 1  Rows_affected: 1
+# Bytes_sent: 52  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 56F003C30
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 19
+SET timestamp=1521634383;
+UPDATE `sbtest1` SET `sbtest1` = 4 WHERE `sbtest1`.`id` = 71423344;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387806
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000010  Lock_time: 0.000000  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 11  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+# No InnoDB statistics available for this query
+SET timestamp=1521634383;
+# administrator command: Ping;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387782
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000369  Lock_time: 0.000063  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 1617  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 56F003C31
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 42
+SET timestamp=1521634383;
+SELECT  `sbtest1`.* FROM `sbtest1`  WHERE (user_id = 228576 AND call_status = 2 AND agent_id = 6989) LIMIT 1;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]   Id: 64149974
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000135  Lock_time: 0.000043  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 106  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 56F003C32
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 3
+use kamblfreg;
+SET timestamp=1521634383;
+select password from sbtest1 where username='joe' AND domain='example.com';
+# User@Host: sbuser[sbuser] @  [127.0.0.1]   Id: 64149979
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000137  Lock_time: 0.000043  Rows_sent: 1  Rows_examined: 1  Rows_affected: 0
+# Bytes_sent: 111  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 56F003C33
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+#   InnoDB_IO_r_ops: 0  InnoDB_IO_r_bytes: 0  InnoDB_IO_r_wait: 0.000000
+#   InnoDB_rec_lock_wait: 0.000000  InnoDB_queue_wait: 0.000000
+#   InnoDB_pages_distinct: 3
+use kamsipreg;
+SET timestamp=1521634383;
+select `password` from `sbtest1` where `username`='joe2' AND `domain`='example.de';
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387779
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.001041  Lock_time: 0.000000  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 11  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# InnoDB_trx_id: 56F003C30
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+# No InnoDB statistics available for this query
+use sysbench;
+SET timestamp=1521634383;
+COMMIT;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387838
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000010  Lock_time: 0.000000  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 11  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+# No InnoDB statistics available for this query
+SET timestamp=1521634383;
+# administrator command: Ping;
+# User@Host: sbtest1[sbtest1] @ [127.0.0.1]  Id: 93963157
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000074  Lock_time: 0.000000  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 11  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+# No InnoDB statistics available for this query
+SET timestamp=1521634383;
+set autocommit=1;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387778
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000029  Lock_time: 0.000000  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 11  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+# No InnoDB statistics available for this query
+SET timestamp=1521634383;
+BEGIN;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387778
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000029  Lock_time: 0.000000  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 11  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+# No InnoDB statistics available for this query
+SET timestamp=1521634383;
+Select * from t1 where id=100;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387778
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000029  Lock_time: 0.000000  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 11  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+# No InnoDB statistics available for this query
+SET timestamp=1521634383;
+commit;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387777
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000029  Lock_time: 0.000000  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 11  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+# No InnoDB statistics available for this query
+SET timestamp=1521634383;
+BEGIN;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387777
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000029  Lock_time: 0.000000  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 11  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+# No InnoDB statistics available for this query
+SET timestamp=1521634383;
+Select * from t1 where id=200;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90387777
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000029  Lock_time: 0.000000  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 11  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+# No InnoDB statistics available for this query
+SET timestamp=1521634383;
+commit;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90397777
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000029  Lock_time: 0.000000  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 11  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+# No InnoDB statistics available for this query
+SET timestamp=1521634383;
+BEGIN;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90397777
+# Schema: sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000029  Lock_time: 0.000000  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 11  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+# No InnoDB statistics available for this query
+SET timestamp=1521634383;
+Select * from t1 where id=200;
+# User@Host: sbuser[sbuser] @  [127.0.0.1]  Id: 90397777
+# : sysbench  Last_errno: 0  Killed: 0
+# Query_time: 0.000029  Lock_time: 0.000000  Rows_sent: 0  Rows_examined: 0  Rows_affected: 0
+# Bytes_sent: 11  Tmp_tables: 0  Tmp_disk_tables: 0  Tmp_table_sizes: 0
+# QC_Hit: No  Full_scan: No  Full_join: No  Tmp_table: No  Tmp_table_on_disk: No
+# Filesort: No  Filesort_on_disk: No  Merge_passes: 0
+# No InnoDB statistics available for this query
+SET timestamp=1521634383;
+commit;

@@ -9,8 +9,6 @@ import re
 import hashlib
 import csv
 from template import lua_templates
-from mako.template import Template
-
 
 
 ### configure logging
@@ -23,13 +21,19 @@ logging.basicConfig(level=level, format=format, handlers=handlers)
 class fingerprint():
     """
     Creating Finger Prints from the queries.
-    Parsing all queries and removes the valuables and replaces them with <v1>, <v2> etc...
+    Parsing all queries and removes the variables and replaces them with <v1>, <v2> etc...
     """
 
     # def __init__(self):
     #     self.final_dict = {}
 
     def write_file(self, filename, data_to_csv):
+        """
+        This function is writing data to CSV file.
+
+        :param filename: output filename, where to write the csv file
+        :param data_to_csv: the data what you want to write down.
+        """
         file_exists = os.path.isfile(filename)
         with open(filename, mode='a') as csv_file:
             fieldnames = ['thread_id', 'sequence', 'trx_number' , 'finger_hash', 'finger_hash_trx', 'orig_query', 'fingerprint', 'values' ]
@@ -43,6 +47,19 @@ class fingerprint():
    #     return bool(re.search(r'[-+]?(?:\d+(?:\.\d*)?|\.\d+)', string))
 
     def createFingerprint(self, thread_id, hash, query, result_csv, debug, sequence):
+        """
+        The actual function which is creating the query finger prints.
+        There is a lot of regexp and parsing happening in this function.
+        Tried to prepare for all queries but if there is an issue most of the time you have to look around in this section.
+
+        :param thread_id: The thread_id of the query.
+        :param hash: The hash of the query.
+        :param query: The original query itself.
+        :param result_csv: The file where to write the result.
+        :param debug: Debug,yes or no.
+        :param sequence: This number is incrementing, every query has a unique number. We know the order of teh queries in the trx.
+        :return:
+        """
         variable_counter = 1
         myvalues = {}
 
@@ -70,7 +87,11 @@ class fingerprint():
                  self.new_hash = True
 
             # we are using two sub to have different variable counters for the values
-            # example `between 5 and 10` - `between <v1> and <v2>`
+            # example `between 5 and 10` - `between $<v1> and $<v2>`
+            # In one query there could be multiple BETWEEN conditions. First we go trough all of them and change the first part.
+            # Example: Between $<v1> and 10
+            # Then we go trough on all of them again and we change the second part
+            # Example: Between $<v1> and $<v2>
             while True:
                 between_first = re.search(r'(?i)(WHERE(.*?))BETWEEN\s+(\'|\"|\s)?(?!\$<v\d+>)(.*?)(\'|\"|\s+)?\s+AND(.*?)',self.query)
                 if between_first:
@@ -92,6 +113,7 @@ class fingerprint():
                         variable_counter += 1
                 else:
                     break
+
         # If it is an INSERT|REPLACE INTO VALUES
         query_matches = re.search(r'(?i)(INSERT|REPLACE)(\s+)?(ignore)?(\s+)?(INTO)?', self.query)
         if query_matches:
@@ -106,8 +128,7 @@ class fingerprint():
                     variable_counter += 1
                 else:
                     break
-        # (?i)IN(\s+)?(\()([^select].*?)\)(\)+)?(.*?)
-        # (?i)(IN)\s + (\()[ ^\s + select](.* ?)(\))(\) +)?(.* ?)
+
         # If it is an SELECT ... IN ()
         query_matches = re.search(r'(?i)(IN)(\s+)?(\()(?!\$<v\d+>)([^select].*?)(\))(\)+)?(.*?)', self.query)
         if query_matches:
@@ -160,6 +181,7 @@ class fingerprint():
                 else:
                     break
 
+        # Queries which contain interval
         query_matches = re.search(r'(?i)=(\s*)INTERVAL(\s*)\((?!\$<v\d+>)(.*?)\)', self.query)
         if query_matches:
             while True:
@@ -232,6 +254,11 @@ class fingerprint():
         return self.temp_dict
 
     def save_dict(self, dict, file ):
+        """
+        Saving a dictionary to CSV.
+        :param dict: The Dictionary.
+        :param file: The filename.
+        """
         self.dict = dict
         for trx_hash in dict.keys():
             for finger_hash in dict[trx_hash].keys():
@@ -247,10 +274,6 @@ class fingerprint():
                 data_csv.append(self.dict[trx_hash][finger_hash]['values'])
                 finger.write_file(file, data_csv)
 
-    def merge_dict(self, dict1, dict2):
-        for k in dict2:
-            for v in dict2[k]['values']:
-                dict1[k]['values'][v].update(dict2[k]['values'][v])
 
 class readData():
 
@@ -459,12 +482,9 @@ def main(argv):
     final_dict = {}
 
     final_dict['0'] = {}
-    trx_dict = {}
     tmp_dict = {}
-    no_trx_dict = {}
     # dictionary which holds all the thread numbers and if a transaction is avtive or not in that thread
     thread_dict = {}
-    trx_list = []
 
     trxID = 1
     message = """Usage:
@@ -628,5 +648,4 @@ def main(argv):
 if __name__ == "__main__":
     readC = readData()
     finger = fingerprint()
-
     main(sys.argv[1:])
