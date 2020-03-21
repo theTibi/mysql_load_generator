@@ -479,6 +479,7 @@ def main(argv):
     slowlogFile = ''
     debug = 0
     testrun = 0
+    outputFile = "pyload.csv"
     final_dict = {}
 
     final_dict['0'] = {}
@@ -488,7 +489,10 @@ def main(argv):
 
     trxID = 1
     message = """Usage:
-    Process SlowLog File: pyLoad.py -i <slowlogFile>
+    Process SlowLog File: pyLoad.py -i <slowlogFile> 
+    -d,--debug = debug
+    -o,--outputFile = Creates CSV files for debug purposes.
+    -t,testrun = Going to run on the "test_file.source.log"
     """
     try:
         opts, args = getopt.getopt(argv, "hi:do:t", ["slowlogFile=", "debug","outputFile=","testrun"])
@@ -509,8 +513,6 @@ def main(argv):
                 os.remove(outputFile)
         elif opt in ("-t", "--testrun"):
             testrun = 1
-
-
 
     """
     Reads all the queries and thread ID from the dictionary. 
@@ -641,9 +643,6 @@ def main(argv):
 
         result_variables = (SysB.variables_lua())
         SysB.write_template("run_variables.lua", result_variables)
-
-
-
 
 if __name__ == "__main__":
     readC = readData()
