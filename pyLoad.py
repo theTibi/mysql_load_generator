@@ -18,7 +18,7 @@ handlers = [logging.FileHandler('test.log'), logging.StreamHandler()]
 logging.basicConfig(level=level, format=format, handlers=handlers)
 
 
-class fingerprint():
+class Fingerprint():
     """
     Creating Finger Prints from the queries.
     Parsing all queries and removes the variables and replaces them with <v1>, <v2> etc...
@@ -36,7 +36,8 @@ class fingerprint():
         """
         file_exists = os.path.isfile(filename)
         with open(filename, mode='a') as csv_file:
-            fieldnames = ['thread_id', 'sequence', 'trx_number' , 'finger_hash', 'finger_hash_trx', 'orig_query', 'fingerprint', 'values' ]
+            fieldnames = ['thread_id', 'sequence', 'trx_number', 'finger_hash', 'finger_hash_trx', 'orig_query',
+                          'fingerprint', 'values']
             writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             if not file_exists:
                 writer.writerow(fieldnames)
@@ -46,56 +47,57 @@ class fingerprint():
    # def isdigit(self , string):
    #     return bool(re.search(r'[-+]?(?:\d+(?:\.\d*)?|\.\d+)', string))
 
-    def createFingerprint(self, thread_id, hash, query, result_csv, debug, sequence):
+    def createfingerprint(self, thread_id, hash, query, result_csv, debug, sequence):
         """
         The actual function which is creating the query finger prints.
         There is a lot of regexp and parsing happening in this function.
-        Tried to prepare for all queries but if there is an issue most of the time you have to look around in this section.
+        Tried to prepare for all queries but if there is an issue
+        most of the time you have to look around in this section.
 
         :param thread_id: The thread_id of the query.
         :param hash: The hash of the query.
         :param query: The original query itself.
         :param result_csv: The file where to write the result.
         :param debug: Debug,yes or no.
-        :param sequence: This number is incrementing, every query has a unique number. We know the order of teh queries in the trx.
+        :param sequence: This number is incrementing, every query has a unique number.
+        We know the order of teh queries in the trx.
         :return:
         """
         variable_counter = 1
         myvalues = {}
 
-        self.sequence = sequence
-        self.hash = hash
-        self.query = ' '.join(query.split())
-        self.result_csv = result_csv
-        self.origingal_query = self.query
-        self.thread_id = thread_id
-        self.debug = debug
-        self.new_hash = False
-        self.hash_query_list = 0
-        self.trx_number = 0
+        query = ' '.join(query.split())
+        origingal_query = query
+        new_hash = False
+        hash_query_list = 0
+        trx_number = 0
 
-        if self.debug:
-            logging.debug(self.query)
+        if debug:
+            logging.debug(query)
 
         # Between-And
-        query_between = re.search(r'(?i)(WHERE(.*))BETWEEN (\'|\")?(.*?)(\'|\")? AND ([\d]+|(\'|\")(.*?)(\'|\"))(.*)$', self.query)
+        query_between = re.search(r'(?i)(WHERE(.*))BETWEEN (\'|\")?(.*?)(\'|\")? AND ([\d]+|(\'|\")(.*?)(\'|\"))(.*)$',
+                                  query)
 
         if query_between:
             # if value starts with a number and contains - or : if it is a date
             # we generate a different hash for that
             if re.match(r"^\"\d+[-:]", query_between.group(4)):
-                 self.new_hash = True
-
+                new_hash = True
             # we are using two sub to have different variable counters for the values
             # example `between 5 and 10` - `between $<v1> and $<v2>`
-            # In one query there could be multiple BETWEEN conditions. First we go trough all of them and change the first part.
+            # In one query there could be multiple BETWEEN conditions.
+            # First we go trough all of them and change the first part.
             # Example: Between $<v1> and 10
             # Then we go trough on all of them again and we change the second part
             # Example: Between $<v1> and $<v2>
             while True:
-                between_first = re.search(r'(?i)(WHERE(.*?))BETWEEN\s+(\'|\"|\s)?(?!\$<v\d+>)(.*?)(\'|\"|\s+)?\s+AND(.*?)',self.query)
+                between_first = re.search(r'(?i)(WHERE(.*?))BETWEEN\s+'
+                                          r'(\'|\"|\s)?(?!\$<v\d+>)(.*?)(\'|\"|\s+)?\s+AND(.*?)', query)
                 if between_first:
-                    self.query = re.sub(r'(?i)(WHERE(.*?))BETWEEN\s+(\'|\"|\s)?(?!\$<v\d+>)(.*?)(\'|\"|\s+)?\s+AND(.*?)', rf'\1 BETWEEN $<v{variable_counter}> AND', self.query,1)
+                    query = re.sub(r'(?i)(WHERE(.*?))BETWEEN\s+'
+                                        r'(\'|\"|\s)?(?!\$<v\d+>)(.*?)(\'|\"|\s+)?\s+AND(.*?)',
+                                        rf'\1 BETWEEN $<v{variable_counter}> AND', query, 1)
                     if f'v{variable_counter}' not in myvalues:
                         myvalues[f'v{variable_counter}'] = set()
                     myvalues[f'v{variable_counter}'].add(between_first.group(4))
@@ -104,23 +106,25 @@ class fingerprint():
                     break
 
             while True:
-                between_first = re.search(r'(?i)between\s+(\$<v\d+>)\s+and\s+(?!\$<v\d+>)(.*?)(\s+|;)',self.query)
+                between_first = re.search(r'(?i)between\s+(\$<v\d+>)\s+and\s+(?!\$<v\d+>)(.*?)(\s+|;)', query)
                 if between_first:
-                        self.query = re.sub(r'(?i)between\s+(\$<v\d+>)\s+and\s+(?!\$<v\d+>)(.*?)(\s+|;)', rf'BETWEEN \1 AND $<v{variable_counter}>\3', self.query,1)
-                        if f'v{variable_counter}' not in myvalues:
-                            myvalues[f'v{variable_counter}'] = set()
-                        myvalues[f'v{variable_counter}'].add(between_first.group(2))
-                        variable_counter += 1
+                    query = re.sub(r'(?i)between\s+(\$<v\d+>)\s+and\s+(?!\$<v\d+>)(.*?)(\s+|;)',
+                                   rf'BETWEEN \1 AND $<v{variable_counter}>\3', query, 1)
+                    if f'v{variable_counter}' not in myvalues:
+                        myvalues[f'v{variable_counter}'] = set()
+                    myvalues[f'v{variable_counter}'].add(between_first.group(2))
+                    variable_counter += 1
                 else:
                     break
 
         # If it is an INSERT|REPLACE INTO VALUES
-        query_matches = re.search(r'(?i)(INSERT|REPLACE)(\s+)?(ignore)?(\s+)?(INTO)?', self.query)
+        query_matches = re.search(r'(?i)(INSERT|REPLACE)(\s+)?(ignore)?(\s+)?(INTO)?', query)
         if query_matches:
             while True:
-                query_matches = re.search(r'(?i)(VALUES).\(((?!\$<v\d+>).*)\)', self.query)
+                query_matches = re.search(r'(?i)(VALUES).\(((?!\$<v\d+>).*)\)', query)
                 if query_matches:
-                    self.query = re.sub(r'(?i)(VALUES).\(((?!\$<v\d+>).*)\)', rf'\1 ($<v{variable_counter}>)', self.query, 1)
+                    query = re.sub(r'(?i)(VALUES).\(((?!\$<v\d+>).*)\)', rf'\1 ($<v{variable_counter}>)',
+                                   query, 1)
 
                     if f'v{variable_counter}' not in myvalues:
                         myvalues[f'v{variable_counter}'] = set()
@@ -130,13 +134,14 @@ class fingerprint():
                     break
 
         # If it is an SELECT ... IN ()
-        query_matches = re.search(r'(?i)(IN)(\s+)?(\()(?!\$<v\d+>)([^select].*?)(\))(\)+)?(.*?)', self.query)
+        query_matches = re.search(r'(?i)(IN)(\s+)?(\()(?!\$<v\d+>)([^select].*?)(\))(\)+)?(.*?)', query)
         if query_matches:
             while True:
-                query_matches = re.search(r'(?i)(IN)(\s+)?(\()(?!\$<v\d+>)([^select].*?)(\))(\)+)?(.*?)', self.query)
+                query_matches = re.search(r'(?i)(IN)(\s+)?(\()(?!\$<v\d+>)([^select].*?)(\))(\)+)?(.*?)', query)
                 if query_matches:
-                    self.query = re.sub(r'(?i)(IN)(\s+)?(\()(?!\$<v\d+>)([^select].*?)(\))(\)+)?(.*?)', f'\1 IN ($<v{variable_counter}>)\7',
-                                        self.query, 1)
+                    query = re.sub(r'(?i)(IN)(\s+)?(\()(?!\$<v\d+>)([^select].*?)(\))(\)+)?(.*?)',
+                                        f'\1 IN ($<v{variable_counter}>)\7',
+                                        query, 1)
 
                     if f'v{variable_counter}' not in myvalues:
                         myvalues[f'v{variable_counter}'] = set()
@@ -146,12 +151,12 @@ class fingerprint():
                     break
 
         # everything between '' and ""
-        query_matches = re.search(r'([\"\'])((?:\\\1|.)*?)\1', self.query)
+        query_matches = re.search(r'([\"\'])((?:\\\1|.)*?)\1', query)
         if query_matches:
             while True:
-                query_matches = re.search(r'([\"\'])((?:\\\1|.)*?)\1', self.query)
+                query_matches = re.search(r'([\"\'])((?:\\\1|.)*?)\1', query)
                 if query_matches:
-                    self.query = re.sub(r'([\"\'])((?:\\\1|.)*?)\1', rf'$<v{variable_counter}>', self.query, 1)
+                    query = re.sub(r'([\"\'])((?:\\\1|.)*?)\1', rf'$<v{variable_counter}>', query, 1)
                     if f'v{variable_counter}' not in myvalues:
                         myvalues[f'v{variable_counter}'] = set()
                     myvalues[f'v{variable_counter}'].add(query_matches.group(2))
@@ -160,16 +165,17 @@ class fingerprint():
                     break
 
         # where values is a simple number
-        query_matches = re.search(r'(=|<>|=>|<=|>=|=<|<|>)(\s+)?(-)?([\d]+(\.[\d]+)?)', self.query)
+        query_matches = re.search(r'(=|<>|=>|<=|>=|=<|<|>)(\s+)?(-)?([\d]+(\.[\d]+)?)', query)
         # if it matches we go trough the whole line and replace all matches but we increase the counter as well.
         # SELECT c FROM sbtest1 WHERE id=23 and bela=29 and lajos="fsdfsf";
         # SELECT c FROM sbtest1 WHERE id=<v1> and bela=<v2> and lajos=v3;
         if query_matches:
             while True:
-                query_matches = re.search(r'(=|<>|=>|<=|>=|=<|<|>)(\s+)?(-)?([\d]+(\.[\d]+)?)', self.query)
+                query_matches = re.search(r'(=|<>|=>|<=|>=|=<|<|>)(\s+)?(-)?([\d]+(\.[\d]+)?)', query)
                 if query_matches:
-                    self.query = re.sub(r'(=|<>|=>|<=|>=|=<|<|>)(\s+)?(-)?([\d]+(\.[\d]+)?)', rf'\1 $<v{variable_counter}>',
-                                        self.query, 1)
+                    query = re.sub(r'(=|<>|=>|<=|>=|=<|<|>)(\s+)?(-)?([\d]+(\.[\d]+)?)',
+                                        rf'\1 $<v{variable_counter}>',
+                                        query, 1)
                     if f'v{variable_counter}' not in myvalues:
                         myvalues[f'v{variable_counter}'] = set()
 
@@ -182,12 +188,13 @@ class fingerprint():
                     break
 
         # Queries which contain interval
-        query_matches = re.search(r'(?i)=(\s*)INTERVAL(\s*)\((?!\$<v\d+>)(.*?)\)', self.query)
+        query_matches = re.search(r'(?i)=(\s*)INTERVAL(\s*)\((?!\$<v\d+>)(.*?)\)', query)
         if query_matches:
             while True:
-                query_matches = re.search(r'(?i)=(\s*)INTERVAL(\s*)\((?!\$<v\d+>)(.*?)\)', self.query)
+                query_matches = re.search(r'(?i)=(\s*)INTERVAL(\s*)\((?!\$<v\d+>)(.*?)\)', query)
                 if query_matches:
-                    self.query = re.sub(r'(?i)=(\s*)INTERVAL(\s*)\((?!\$<v\d+>)(.*?)\)',rf'= INTERVAL($<v{variable_counter}>)',self.query, 1)
+                    query = re.sub(r'(?i)=(\s*)INTERVAL(\s*)\((?!\$<v\d+>)(.*?)\)',
+                                        rf'= INTERVAL($<v{variable_counter}>)', query, 1)
                     if f'v{variable_counter}' not in myvalues:
                         myvalues[f'v{variable_counter}'] = set()
                     myvalues[f'v{variable_counter}'].add(query_matches.group(3))
@@ -197,25 +204,27 @@ class fingerprint():
 
 
 
-        if self.debug:
-            logging.debug(self.query)
-        # we generate a hash we add trx_id to the query as well because the same query can be part of multiple transactions as well.
-        # with this they will have a different hash but queries outside of a transactions trx_id=0 will have the same hash
+        if debug:
+            logging.debug(query)
+        # we generate a hash we add trx_id to the query as well because
+        # the same query can be part of multiple transactions as well.
+        # with this they will have a different hash but queries outside
+        # of a transactions trx_id=0 will have the same hash
         # if there is a date in between , we generate a different hash
-        if self.new_hash:
-            self.hash_query = self.query + str(self.sequence) + "date"
-            self.hash_obj_thread = hashlib.md5(self.hash_query.encode()).hexdigest()
-            self.hash_finger = self.query + "date"
-            self.hash_obj = hashlib.md5(self.hash_finger.encode()).hexdigest()
+        if new_hash:
+            hash_query = query + str(sequence) + "date"
+            hash_obj_thread = hashlib.md5(hash_query.encode()).hexdigest()
+            hash_finger = query + "date"
+            hash_obj = hashlib.md5(hash_finger.encode()).hexdigest()
         else:
-            self.hash_query = self.query + str(self.sequence)
-            self.hash_obj_thread = hashlib.md5(self.hash_query.encode()).hexdigest()
-            self.hash_finger = self.query
-            self.hash_obj = hashlib.md5(self.hash_finger.encode()).hexdigest()
+            hash_query = query + str(sequence)
+            hash_obj_thread = hashlib.md5(hash_query.encode()).hexdigest()
+            hash_finger = query
+            hash_obj = hashlib.md5(hash_finger.encode()).hexdigest()
 
-        self.temp_dict = {}
-        self.temp_dict = {self.thread_id: {
-            self.hash_obj: {
+        temp_dict = {}
+        temp_dict = {thread_id: {
+            hash_obj: {
                 'thread_id': {0},
                 'sequence': {0},
                 'trx_number': {0},
@@ -228,75 +237,75 @@ class fingerprint():
                 'values': {None}
             }
         }}
-        self.temp_dict[self.thread_id][self.hash_obj]['thread_id'] = self.thread_id
-        self.temp_dict[self.thread_id][self.hash_obj]['sequence'] = self.sequence
-        self.temp_dict[self.thread_id][self.hash_obj]['trx_number'] = self.trx_number
-        self.temp_dict[self.thread_id][self.hash_obj]['orig_hash'] = self.hash
-        self.temp_dict[self.thread_id][self.hash_obj]['orig_query'] = self.origingal_query
-        self.temp_dict[self.thread_id][self.hash_obj]['finger_hash'] = self.hash_obj
-        self.temp_dict[self.thread_id][self.hash_obj]['finger_hash_trx'] = self.hash_obj_thread
-        self.temp_dict[self.thread_id][self.hash_obj]['fingerprint'] = self.query
-        self.temp_dict[self.thread_id][self.hash_obj]['hash_query_list'] = self.hash_query_list
-        self.temp_dict[self.thread_id][self.hash_obj]['values'] = myvalues
+        temp_dict[thread_id][hash_obj]['thread_id'] = thread_id
+        temp_dict[thread_id][hash_obj]['sequence'] = sequence
+        temp_dict[thread_id][hash_obj]['trx_number'] = trx_number
+        temp_dict[thread_id][hash_obj]['orig_hash'] = hash
+        temp_dict[thread_id][hash_obj]['orig_query'] = origingal_query
+        temp_dict[thread_id][hash_obj]['finger_hash'] = hash_obj
+        temp_dict[thread_id][hash_obj]['finger_hash_trx'] = hash_obj_thread
+        temp_dict[thread_id][hash_obj]['fingerprint'] = query
+        temp_dict[thread_id][hash_obj]['hash_query_list'] = hash_query_list
+        temp_dict[thread_id][hash_obj]['values'] = myvalues
 
         # hash_obj = hashlib.md5(query.encode())
         data = []
-        data.append(self.thread_id)
-        data.append(self.sequence)
-        data.append(self.trx_number)
-        data.append(self.hash)
-        data.append(self.hash_obj)
-        data.append(self.hash_obj_thread)
-        data.append(self.origingal_query)
-        data.append(self.query)
+        data.append(thread_id)
+        data.append(sequence)
+        data.append(trx_number)
+        data.append(hash)
+        data.append(hash_obj)
+        data.append(hash_obj_thread)
+        data.append(origingal_query)
+        data.append(query)
         data.append(myvalues)
-        finger.write_file(result_csv, data)
-        return self.temp_dict
+        FINGER.write_file(result_csv, data)
+        return temp_dict
 
-    def save_dict(self, dict, file ):
+    def save_dict(self, dict, file):
         """
         Saving a dictionary to CSV.
         :param dict: The Dictionary.
         :param file: The filename.
         """
-        self.dict = dict
+        dict = dict
         for trx_hash in dict.keys():
             for finger_hash in dict[trx_hash].keys():
                 data_csv = []
                 # data_csv.append(thread_id)
-                data_csv.append(self.dict[trx_hash][finger_hash]['thread_id'])
-                data_csv.append(self.dict[trx_hash][finger_hash]['sequence'])
-                data_csv.append(self.dict[trx_hash][finger_hash]['trx_number'])
-                data_csv.append(self.dict[trx_hash][finger_hash]['finger_hash'])
-                data_csv.append(self.dict[trx_hash][finger_hash]['finger_hash_trx'])
-                data_csv.append(self.dict[trx_hash][finger_hash]['orig_query'])
-                data_csv.append(self.dict[trx_hash][finger_hash]['fingerprint'])
-                data_csv.append(self.dict[trx_hash][finger_hash]['values'])
-                finger.write_file(file, data_csv)
+                data_csv.append(dict[trx_hash][finger_hash]['thread_id'])
+                data_csv.append(dict[trx_hash][finger_hash]['sequence'])
+                data_csv.append(dict[trx_hash][finger_hash]['trx_number'])
+                data_csv.append(dict[trx_hash][finger_hash]['finger_hash'])
+                data_csv.append(dict[trx_hash][finger_hash]['finger_hash_trx'])
+                data_csv.append(dict[trx_hash][finger_hash]['orig_query'])
+                data_csv.append(dict[trx_hash][finger_hash]['fingerprint'])
+                data_csv.append(dict[trx_hash][finger_hash]['values'])
+                FINGER.write_file(file, data_csv)
 
 
-class readData():
+class readdata():
 
     def __init__(self):
         # finding all queries and they could start with a comment as well
-        self.regex = "(?i)^(\/\*(.*)\*\/)?( |)(select|update|insert|delete|replace|commit|begin|start transaction|SET autocommit)"
+        self.regex = r"(?i)^(\/\*(.*)\*\/)?( |)(select|update|insert|delete|replace|commit|" \
+                     "begin|start transaction|SET autocommit)"
         self.splitstring = "# Time: "
         self.trx_order_id = 0
         self.count = 1
-        self.query_values = ""
-        self.thread_id = 0
+        query_values = ""
+        thread_id = 0
         self.re_thread_id = re.compile(r'^# Thread_id: (\d+)')
         self.re_thread_id_userhost = re.compile(r'^# User@Host: (.*) Id:\s+(\d+)')
-
         self.stop_list = "(?i)^(set timestamp=|SELECT @@version|SHOW GLOBAL STATUS|use(.*);|set session |set global)"
 
     def openFile(self, slowlogFile, debug):
-        self.debug = debug
+        debug = debug
         if os.path.exists(slowlogFile):
             # encoding because we need escape characters as well
             with open(slowlogFile, 'r', encoding='raw_unicode_escape') as f:
                 try:
-                    if self.debug:
+                    if debug:
                         logging.debug(f"{slowlogFile} is opened.")
                     filecontent = [line for line in f.readlines() if line.strip()]
                     return filecontent
@@ -307,7 +316,7 @@ class readData():
                     sys.exit()
         else:
             if debug:
-                if self.debug:
+                if debug:
                     logging.info("Slow log file does not exists!")
 
     def parseSlowLog(self, slowlogFile, debug):
@@ -319,14 +328,14 @@ class readData():
         """
         # read the file into filecontent
         self.slow_dictionary = {}
-        self.debug = debug
+        debug = debug
         # we need i to be able to keep the sequence of the queries in a transaction
         # which query has higher seq number should be executed later
         self.i = 1
-        filecontent = readC.openFile(slowlogFile, self.debug)
+        filecontent = READC.openFile(slowlogFile, debug)
         # find first # Time: 2020-01-21T16:55:13.249612Z
-        for lines in readC.get_queries(filecontent):
-            self.thread_id = lines[0]
+        for lines in READC.get_queries(filecontent):
+            thread_id = lines[0]
 
             if re.match(self.regex, lines[1]) is not None:
                 query = lines[1]
@@ -340,7 +349,7 @@ class readData():
                     'sequence': {0},
                     'orig_query': {None}
                 }}
-                temp_dict[hash_obj]['thread_id'] = self.thread_id
+                temp_dict[hash_obj]['thread_id'] = thread_id
                 temp_dict[hash_obj]['sequence'] = self.i
                 temp_dict[hash_obj]['orig_query'] = query_text
                 self.slow_dictionary.update(temp_dict)
@@ -357,25 +366,26 @@ class readData():
         query = []
         thread_id = 0
         for line in filecontent:
-                # filter out mysqldump and pt-table-checksum queries
-                if not re.search(r'(?i)(( from mysql\.[a-z]+)|(SELECT \/\*!40001 SQL_NO_CACHE \*\/ \* FROM)|(REPLACE INTO `percona`.`checksums` )|(FROM performance_schema\.[a-z]+)|(FROM information_schema\.[a-z]+))',
-                                line):
+            # filter out mysqldump and pt-table-checksum queries
+            if not re.search(r'(?i)(( from mysql\.[a-z]+)|(SELECT \/\*!40001 SQL_NO_CACHE \*\/ \* FROM)|'
+                             r'(REPLACE INTO `percona`.`checksums` )|(FROM performance_schema\.[a-z]+)|'
+                             r'(FROM information_schema\.[a-z]+))', line):
 
-                    if line.startswith('# Time:') or line.startswith('# User@Host:'):
-                        if query:
-                            yield thread_id, ' '.join(query)
-                        if line.startswith('# User@Host:'):
-                            m = self.re_thread_id_userhost.match(line)
-                            if m:
-                                thread_id = str(m.group(2))
-                        query = []
-                    elif line.startswith('# Thread_id:'):
-                        m = self.re_thread_id.match(line)
-                        thread_id = str(m.group(1))
-                    elif line.startswith('#') or re.search(self.stop_list, line):
-                        continue
-                    else:
-                        query.append(line.strip())
+                if line.startswith('# Time:') or line.startswith('# User@Host:'):
+                    if query:
+                        yield thread_id, ' '.join(query)
+                    if line.startswith('# User@Host:'):
+                        m = self.re_thread_id_userhost.match(line)
+                        if m:
+                            thread_id = str(m.group(2))
+                    query = []
+                elif line.startswith('# Thread_id:'):
+                    m = self.re_thread_id.match(line)
+                    thread_id = str(m.group(1))
+                elif line.startswith('#') or re.search(self.stop_list, line):
+                    continue
+                else:
+                    query.append(line.strip())
 
         yield thread_id, ' '.join(query)
 
@@ -390,7 +400,7 @@ class createSysbench():
 
         :return:
         """
-        self.query_list = []
+        query_list = []
         self.values_list = {}
         self.values_dict = {}
         self.values = {}
@@ -398,24 +408,26 @@ class createSysbench():
         for key in self.final_dict.keys():
             for f_hash in self.final_dict[key].keys():
                 seq_number = self.final_dict[key][f_hash]['sequence']
-                if self.final_dict[key][f_hash]['fingerprint'].lower() not in "begin; start transaction; SET autocommit = commit;".lower():
+                if self.final_dict[key][f_hash]['fingerprint'].lower() not in \
+                        "begin; start transaction; SET autocommit = commit;".lower():
                     self.sysb_trx[seq_number] = {}
                     self.values_list[seq_number] = []
-                    self.query_list.append(seq_number)
+                    query_list.append(seq_number)
                     self.values = self.final_dict[key][f_hash]['values']
-                    self.query = f"\"{self.final_dict[key][f_hash]['fingerprint']}\""
+                    query = f"\"{self.final_dict[key][f_hash]['fingerprint']}\""
                     self.sysb_trx[seq_number] = self.values
                     self.values_dict[seq_number] = {}
                     for k in self.values.keys():
                         self.values_dict[seq_number].update({k: self.values[k]})
-                    for match in re.finditer(r'(<v(\d+)>)', self.query):
+                    for match in re.finditer(r'(<v(\d+)>)', query):
                         if match:
-                            self.query = f"{self.query} q{seq_number}_v{match.group(2)},"
+                            query = f"{query} q{seq_number}_v{match.group(2)},"
                             self.values_list[seq_number].append(match.group(2))
                         else:
                             break
 
-        return lua_templates.pyload_variables.render(queries=self.query_list, values_list=self.values_list,values=self.values_dict)
+        return lua_templates.pyload_variables.render(queries=query_list,
+                                                     values_list=self.values_list, values=self.values_dict)
 
 
     def common_lua(self):
@@ -423,34 +435,37 @@ class createSysbench():
 
         :return:
         """
-        self.query_list = []
+        query_list = []
         self.values_list = {}
 
         for key in self.final_dict.keys():
             for f_hash in self.final_dict[key].keys():
                 seq_number = self.final_dict[key][f_hash]['sequence']
-                if self.final_dict[key][f_hash]['fingerprint'].lower() not in "begin; start transaction; SET autocommit = commit;".lower():
+                if self.final_dict[key][f_hash]['fingerprint'].lower() not in \
+                        "begin; start transaction; SET autocommit = commit;".lower():
                     self.sysb_trx[seq_number] = {}
                     self.values_list[seq_number] = []
-                    self.query_list.append(seq_number)
-                    self.query = f"\"{self.final_dict[key][f_hash]['fingerprint']}\" % {{"
-                    for match in re.finditer(r'(<v(\d+)>)', self.query):
+                    query_list.append(seq_number)
+                    query = f"\"{self.final_dict[key][f_hash]['fingerprint']}\" % {{"
+                    for match in re.finditer(r'(<v(\d+)>)', query):
                         if match:
-                            self.query = f"{self.query} v{match.group(2)} = get_random(q{seq_number}_v{match.group(2)}),"
+                            query = f"{query} v{match.group(2)} " \
+                                         f"= get_random(q{seq_number}_v{match.group(2)}),"
                             self.values_list[seq_number].append(match.group(2))
                         else:
                             break
-                self.query = f"{self.query[:-1]} }}"
-                self.sysb_trx[seq_number] = self.query
-        return lua_templates.oltp_common.render(cmdline_queries=self.query_list, sysb_trx=self.sysb_trx,values_list=self.values_list)
+                query = f"{query[:-1]} }}"
+                self.sysb_trx[seq_number] = query
+        return lua_templates.oltp_common.render(cmdline_queries=query_list, sysb_trx=self.sysb_trx,
+                                                values_list=self.values_list)
 
     def execute_lua(self):
         """
 
         :return:
         """
-        self.query_list = []
-        self.query_execute = []
+        query_list = []
+        query_execute = []
         self.sysb_trx = {}
 
         for key in self.final_dict.keys():
@@ -458,28 +473,30 @@ class createSysbench():
                 seq_number = self.final_dict[key][f_hash]['sequence']
 
                 if self.final_dict[key][f_hash]['trx_number'] == 0:
-                    self.query_list.append(f"prepare_q{seq_number}()")
-                    self.query_execute.append(f"execute_q{seq_number}()")
+                    query_list.append(f"prepare_q{seq_number}()")
+                    query_execute.append(f"execute_q{seq_number}()")
                 else:
-                    if self.final_dict[key][f_hash]['fingerprint'].lower() not in "begin; start transaction; SET autocommit = commit;".lower():
-                        self.query_list.append(f"prepare_q{seq_number}()")
+                    if self.final_dict[key][f_hash]['fingerprint'].lower() \
+                            not in "begin; start transaction; SET autocommit = commit;".lower():
+                        query_list.append(f"prepare_q{seq_number}()")
                         trx_n = self.final_dict[key][f_hash]['trx_number']
                         if trx_n not in self.sysb_trx:
                              self.sysb_trx[trx_n] = []
                         self.sysb_trx[trx_n].append(f"execute_q{seq_number}")
 
-        return lua_templates.pyload_queries.render(prepare_queries=self.query_list, query_execute=self.query_execute,transaction_number=self.sysb_trx)
+        return lua_templates.pyload_queries.render(prepare_queries=query_list, query_execute=query_execute,
+                                                   transaction_number=self.sysb_trx)
 
-    def write_template(self,filename,data):
-        f = open(filename,"w+")
+    def write_template(self, filename, data):
+        f = open(filename, "w+")
         f.write(data)
         f.close()
 
 def main(argv):
-    slowlogFile = ''
+    slowlogfile = ''
     debug = 0
     testrun = 0
-    outputFile = "pyload.csv"
+    outputfile = "pyload.csv"
     final_dict = {}
 
     final_dict['0'] = {}
@@ -487,7 +504,7 @@ def main(argv):
     # dictionary which holds all the thread numbers and if a transaction is avtive or not in that thread
     thread_dict = {}
 
-    trxID = 1
+    trxid = 1
     message = """Usage:
     Process SlowLog File: pyLoad.py -i <slowlogFile> 
     -d,--debug = debug
@@ -495,7 +512,7 @@ def main(argv):
     -t,testrun = Going to run on the "test_file.source.log"
     """
     try:
-        opts, args = getopt.getopt(argv, "hi:do:t", ["slowlogFile=", "debug","outputFile=","testrun"])
+        opts, arg = getopt.getopt(argv, "hi:do:t", ["slowlogfile=", "debug", "outputfile=", "testrun"])
     except getopt.GetoptError:
         print(message)
         sys.exit(2)
@@ -503,35 +520,37 @@ def main(argv):
         if opt == '-h':
             print(message)
             sys.exit()
-        elif opt in ("-i", "--slowlogFile"):
-            slowlogFile = arg
+        elif opt in ("-i", "--slowlogfile"):
+            slowlogfile = arg
         elif opt in ("-d", "--debug"):
             debug = 1
-        elif opt in ("-o", "--outputFile"):
-            outputFile = arg
-            if os.path.exists(outputFile):
-                os.remove(outputFile)
+        elif opt in ("-o", "--outputfile"):
+            outputfile = arg
+            if os.path.exists(outputfile):
+                os.remove(outputfile)
         elif opt in ("-t", "--testrun"):
             testrun = 1
 
     """
     Reads all the queries and thread ID from the dictionary. 
     If there is `begin|start transaction|SET autocommit=0`, in that thread there is a transaction running.
-    All the queries are in the same transaction in that thread until a `commit| set autocommit =1 | rollback` is not coming.
-    If there is a query running in a thread but there was no star transaction in that case query is running outside of a transaction.
+    All the queries are in the same transaction in that thread until a `commit| set autocommit =1 | rollback` 
+    is not coming.
+    If there is a query running in a thread but there was no star transaction 
+    in that case query is running outside of a transaction.
     """
 
     if testrun:
-        slowlogFile = "test_file/test_file.source.log"
+        slowlogfile = "test_file/test_file.source.log"
         result_csv = "test_file/tmp.log"
         if os.path.exists(result_csv):
             os.remove(result_csv)
-        outputFile = result_csv
+        outputfile = result_csv
     else:
-        result_csv = outputFile
+        result_csv = outputfile
 
-    if slowlogFile:
-        queries_dcitionary = readC.parseSlowLog(slowlogFile, debug)
+    if slowlogfile:
+        queries_dcitionary = READC.parseSlowLog(slowlogfile, debug)
 
         for k in queries_dcitionary.keys():
 
@@ -546,22 +565,22 @@ def main(argv):
                 # transaction is running
                 if thread_id != 0:
                     thread_dict[thread_id].update({'trxRunning': True})
-                    thread_dict[thread_id].update({'trxID': trxID})
+                    thread_dict[thread_id].update({'trxID': trxid})
 
                 if debug:
                     logging.info(
                         f"{thread_id} - {thread_dict[thread_id]['trxRunning']} - {thread_dict[thread_id]['trxID']}")
                 # adding the transaction start to the final dictionary
-                result = (finger.createFingerprint(thread_id=thread_id, sequence=queries_dcitionary[k]['sequence'],
+                result = (FINGER.createfingerprint(thread_id=thread_id, sequence=queries_dcitionary[k]['sequence'],
                                                    query=queries_dcitionary[k]['orig_query'], hash=k,
                                                    result_csv=result_csv, debug=debug))
                 tmp_dict.update(result)
-                trxID += 1
+                trxid += 1
 
             # check other queries
-            elif re.match("(?i)^(\/\*(.*)\*\/)?( |)(select|update|insert|delete|replace)",
+            elif re.match(r"(?i)^(\/\*(.*)\*\/)?( |)(select|update|insert|delete|replace)",
                           queries_dcitionary[k]['orig_query']):
-                result = finger.createFingerprint(thread_id=thread_id, sequence=queries_dcitionary[k]['sequence'],
+                result = FINGER.createfingerprint(thread_id=thread_id, sequence=queries_dcitionary[k]['sequence'],
                                                   query=queries_dcitionary[k]['orig_query'], hash=k,
                                                   result_csv=result_csv, debug=debug)
 
@@ -588,7 +607,7 @@ def main(argv):
 
             elif re.match(r"(?i)^(\s+)?(commit|rollback|SET autocommit(\s+)?=(\s+)?1)(\s+)?;$",
                           queries_dcitionary[k]['orig_query']):
-                result = finger.createFingerprint(thread_id=thread_id, sequence=queries_dcitionary[k]['sequence'],
+                result = FINGER.createfingerprint(thread_id=thread_id, sequence=queries_dcitionary[k]['sequence'],
                                                   query=queries_dcitionary[k]['orig_query'], hash=k,
                                                   result_csv=result_csv, debug=debug)
                 trx_query_list = []
@@ -629,10 +648,10 @@ def main(argv):
                             thread_dict[thread_id].update({'trxRunning': False})
                             thread_dict[thread_id].update({'trxID': '0'})
 
-        outputFile = outputFile + ".tmp.csv"
-        if os.path.exists(outputFile):
-            os.remove(outputFile)
-        finger.save_dict(final_dict, outputFile)
+        outputfile = outputfile + ".tmp.csv"
+        if os.path.exists(outputfile):
+            os.remove(outputfile)
+        FINGER.save_dict(final_dict, outputfile)
 
         SysB = createSysbench(final_dict)
         result_execute = SysB.execute_lua()
@@ -645,6 +664,6 @@ def main(argv):
         SysB.write_template("run_variables.lua", result_variables)
 
 if __name__ == "__main__":
-    readC = readData()
-    finger = fingerprint()
+    READC = readdata()
+    FINGER = Fingerprint()
     main(sys.argv[1:])
